@@ -1,172 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Valentine's Day Surprise</title>
-<style>
-  /* Pixelated retro game style */
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=393, height=852, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Valentine 💖</title>
 
-  * {
+<style>
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    width: 430px; /* iPhone 16 width */
-    height: 932px; /* iPhone 16 height */
-    margin: auto;
-    font-family: 'Press Start 2P', cursive;
-    background: url('Background.png') no-repeat center center/cover;
+    width: 393px;
+    height: 852px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: url('background.png') no-repeat center center;
+    background-size: cover;
     overflow: hidden;
     position: relative;
-  }
+}
 
-  h1 {
-    text-align: center;
-    margin-top: 50px;
-    color: #fff;
-    font-size: 16px;
-    text-shadow: 2px 2px 0 #000;
-  }
-
-  .buttons {
+/* Overlay */
+.overlay {
+    background: rgba(255, 182, 193, 0.85);
+    width: 100%;
+    height: 100%;
     position: absolute;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 70px;
-  }
+}
 
-  button {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #ff4d6d;
-    color: #fff;
-    border: 2px solid #fff;
-    border-radius: 4px;
-    box-shadow: 2px 2px #000;
-    transition: all 0.2s;
+/* SCREEN 1 */
+.screen1 {
     position: relative;
-  }
-
-  button:active {
-    transform: translateY(2px);
-    box-shadow: none;
-  }
-
-  .popup {
-    display: none;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8);
-    top: 0;
-    left: 0;
-    z-index: 10;
+    z-index: 2;
     text-align: center;
-    color: #fff;
-  }
+    padding-top: 180px;
+    color: white;
+    transition: opacity 1s ease;
+}
 
-  .popup img {
-    max-width: 80%;
-    margin-top: 50px;
-    image-rendering: pixelated;
-  }
+h1 {
+    font-size: 26px;
+    text-shadow: 2px 2px 6px #ff69b4;
+}
 
-  .popup h2 {
-    margin-top: 30px;
-    font-size: 14px;
-    text-shadow: 2px 2px #ff69b4;
-  }
+.buttons {
+    margin-top: 60px;
+    position: relative;
+    height: 200px;
+}
 
-  /* Fireworks placeholder */
-  .fireworks {
+button {
+    padding: 14px 28px;
+    font-size: 18px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
     position: absolute;
+    transition: all 0.3s ease;
+}
+
+/* YES */
+#yesBtn {
+    background-color: #40e0d0;
+    color: white;
+    left: 60px;
+    top: 60px;
+    animation: pulse 1.2s infinite;
+}
+
+/* NO */
+#noBtn {
+    background-color: #ffb6c1;
+    color: white;
+    left: 200px;
+    top: 60px;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(64,224,208,0.7); }
+    70% { box-shadow: 0 0 0 12px rgba(64,224,208,0); }
+    100% { box-shadow: 0 0 0 0 rgba(64,224,208,0); }
+}
+
+/* Confetti */
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
     top: 0;
-    left: 0;
+    opacity: 0.8;
+    animation: fall 1s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(800px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* SCREEN 2 */
+.screen2 {
+    position: absolute;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-  }
+    background: linear-gradient(#ffb6c1, #40e0d0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.screen2 img {
+    width: 300px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.6);
+}
+
+.screen2 h2 {
+    color: white;
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* GIF */
+.gif-grid {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.gif-box {
+    width: 113px;
+}
 </style>
 </head>
+
 <body>
 
-<h1>Hai BB, Will you be my Valentine?</h1>
+<div class="overlay"></div>
 
-<!-- Tenor GIF Embed -->
-<div class="tenor-gif-embed" data-postid="1312436877492002001" data-share-method="host" data-aspect-ratio="0.995745" data-width="100%">
-  <a href="https://tenor.com/view/peach-goma-gif-1312436877492002001">Peach Goma Sticker</a> from 
-  <a href="https://tenor.com/search/peach+goma-stickers">Peach Goma Stickers</a>
-</div>
-<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+<div class="screen1" id="screen1">
+    <h1>HAI BB, WILL YOU BE MY VALENTINE? 💕</h1>
 
-<div class="buttons">
-  <button id="yesBtn">Yes</button>
-  <button id="noBtn">No</button>
+    <div class="buttons">
+        <button id="yesBtn">YES 💖</button>
+        <button id="noBtn">NO 😜</button>
+    </div>
 </div>
 
-<!-- Popup after Yes -->
-<div class="popup" id="popup">
-  <img src="fireworks.gif" alt="Fireworks">
-  <h2>I knew it, MINE!!! &lt;3</h2>
+<div class="screen2" id="screen2">
+    <img src="image2.jpg" alt="Valentine">
+    <h2>I knew you would hehehehe! I LOVE U BEB! 💞</h2>
 </div>
 
-<!-- Fireworks canvas (optional) -->
-<canvas class="fireworks" id="fireworksCanvas"></canvas>
+<div class="gif-grid">
+    <div class="gif-box">
+        <div class="tenor-gif-embed"
+             data-postid="1312436877492002001"
+             data-share-method="host"
+             data-aspect-ratio="0.995745"
+             data-width="100%">
+        </div>
+    </div>
+</div>
 
-<!-- Background music -->
-<audio id="bgMusic" src="shine-your-light.mp3" loop autoplay></audio>
-<audio id="coinSound" src="Coin.mp3"></audio>
+<script async src="https://tenor.com/embed.js"></script>
+
+<!-- Audio -->
+<audio id="coinSound" src="coin.mp3"></audio>
+<audio id="bgMusic" src="shine-your-light.mp3" loop></audio>
 
 <script>
-  const yesBtn = document.getElementById('yesBtn');
-  const noBtn = document.getElementById('noBtn');
-  const popup = document.getElementById('popup');
-  const coinSound = document.getElementById('coinSound');
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const screen1 = document.getElementById("screen1");
+const screen2 = document.getElementById("screen2");
+const coinSound = document.getElementById("coinSound");
+const bgMusic = document.getElementById("bgMusic");
 
-  const btnDistance = 113.39; // px radius for No button movement
+let noScale = 1;
+let noClicks = 0;
 
-  // Yes button click
-  yesBtn.addEventListener('click', () => {
-    popup.style.display = 'block';
+/* Start music on first tap (mobile autoplay fix) */
+document.body.addEventListener("click", function startMusic() {
+    bgMusic.play().catch(()=>{});
+    document.body.removeEventListener("click", startMusic);
+});
+
+/* NO Button Logic */
+noBtn.addEventListener("click", () => {
+    noClicks++;
+
+    if (noClicks >= 5) {
+        fakeCrash();
+        return;
+    }
+
+    let radius = 70;
+    let x = (Math.random() * radius * 2) - radius;
+    let y = (Math.random() * radius * 2) - radius;
+
+    noScale *= 0.85;
+    noBtn.style.transform = `translate(${x}px, ${y}px) scale(${noScale})`;
+});
+
+/* YES Button Logic */
+yesBtn.addEventListener("click", () => {
     coinSound.play();
-  });
+    launchConfetti();
 
-  // No button movement
-  noBtn.addEventListener('mouseover', () => {
-    const yesRect = yesBtn.getBoundingClientRect();
-    const parentRect = document.body.getBoundingClientRect();
+    setTimeout(() => {
+        screen1.style.opacity = "0";
+        setTimeout(() => {
+            screen2.style.opacity = "1";
+        }, 1000);
+    }, 600);
+});
 
-    let newX, newY;
-    let attempts = 0;
-    do {
-      const angle = Math.random() * 2 * Math.PI;
-      const radius = Math.random() * btnDistance;
-      newX = noBtn.offsetLeft + radius * Math.cos(angle);
-      newY = noBtn.offsetTop + radius * Math.sin(angle);
-      attempts++;
-      // ensure no overlap with Yes button
-    } while (
-      (newX + noBtn.offsetWidth > yesRect.left && newX < yesRect.right &&
-       newY + noBtn.offsetHeight > yesRect.top && newY < yesRect.bottom) &&
-      attempts < 100
-    );
+/* Confetti Explosion */
+function launchConfetti() {
+    for (let i = 0; i < 60; i++) {
+        let confetti = document.createElement("div");
+        confetti.classList.add("confetti");
 
-    // Keep inside parent bounds
-    newX = Math.min(Math.max(newX, 0), parentRect.width - noBtn.offsetWidth);
-    newY = Math.min(Math.max(newY, 0), parentRect.height - noBtn.offsetHeight);
+        confetti.style.left = Math.random() * 393 + "px";
+        confetti.style.backgroundColor =
+            ["#ff69b4", "#40e0d0", "#ffffff", "#ffd1dc"][Math.floor(Math.random()*4)];
 
-    noBtn.style.left = newX + 'px';
-    noBtn.style.top = newY + 'px';
-    noBtn.style.position = 'absolute';
-  });
+        confetti.style.animationDuration = (Math.random() * 1 + 0.5) + "s";
+
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 1200);
+    }
+}
+
+/* FAKE CRASH */
+function fakeCrash() {
+    document.body.innerHTML = `
+        <div style="
+            width:393px;
+            height:852px;
+            background:black;
+            color:#ff3b3b;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            font-family:monospace;
+            text-align:center;
+            padding:20px;
+            animation: glitch 0.1s infinite alternate;
+        ">
+            <h2>⚠ SYSTEM ERROR ⚠</h2>
+            <p>App crashed due to emotional damage.</p>
+            <p>Rebooting love engine...</p>
+        </div>
+        <style>
+            @keyframes glitch {
+                from { transform: translateX(-2px); }
+                to { transform: translateX(2px); }
+            }
+        </style>
+    `;
+
+    setTimeout(() => {
+        document.body.innerHTML = `
+            <div style="
+                width:393px;
+                height:852px;
+                background:linear-gradient(#ffb6c1,#40e0d0);
+                display:flex;
+                flex-direction:column;
+                justify-content:center;
+                align-items:center;
+                font-family:'Comic Sans MS', cursive;
+                color:white;
+                text-align:center;
+                padding:20px;
+            ">
+                <h2>Just kidding... you can't escape 😘</h2>
+                <button onclick="location.reload()" style="
+                    margin-top:30px;
+                    padding:18px 40px;
+                    font-size:22px;
+                    border-radius:40px;
+                    border:none;
+                    background:#40e0d0;
+                    color:white;
+                    animation:pulse 1s infinite;
+                ">YES 💖</button>
+            </div>
+        `;
+    }, 2500);
+}
 </script>
 
 </body>
